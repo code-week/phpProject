@@ -22,6 +22,7 @@ include 'header.php';
 	 		<td>course</td>
 	 		<td>phone</td>
 	 		<td>implementation</td>
+	 		<td>Status</td>
 	 	</tr>
 <?php 
 $conn = mysqli_connect('localhost', 'root', '', 'vratsad_code-week1');
@@ -30,6 +31,28 @@ if (!$conn) {
 } else {
 	//echo "Connected successfully!";
 }
+	$q = "SELECT * from students";
+
+	$result = mysqli_query($conn, $q);
+	
+	if (mysqli_num_rows($result) > 0) {
+		while ($row = mysqli_fetch_assoc($result)) {
+			echo "<tr>";
+			echo "<td> $row[student_id]</td>";
+			echo "<td> $row[first_name]</td>";
+			echo "<td>$row[last_name]</td>";
+			echo "<td>$row[age]</td>";
+			echo "<td>$row[occupation]</td>";
+			echo "<td>$row[previous_experience]</td>";
+			echo "<td>$row[mail]</td>";
+			echo "<td>$row[course]</td>";
+			echo "<td>$row[phone]</td>";
+			echo "<td>$row[implementation]</td>";
+			echo "<td>$row[status]</td>";
+			echo "</tr>";
+		}
+	} 	
 ?>
+</table>
 </body>
 </html>

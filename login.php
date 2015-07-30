@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Admin Panel</title>
+</head>
+<body>
 <?php 
 session_start();
 $conn = mysqli_connect('localhost', 'root', '', 'vratsad_code-week1');
@@ -7,13 +14,7 @@ if (!$conn) {
 	//echo "Connected successfully!";
 }
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>Admin Panel</title>
-</head>
-<body>
+	<h3>Code Week 2015</h3>
 	<center>
 		<br/>
 		<br/>
