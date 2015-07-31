@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2015 at 06:43 PM
+-- Generation Time: Jul 31, 2015 at 11:06 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `vratsad_code-week1`
+-- Database: `vratsad_code-week`
 --
 
 -- --------------------------------------------------------
@@ -56,8 +56,8 @@ INSERT INTO `ages` (`age-group`) VALUES
 ('13 - 19'),
 ('20 - 29'),
 ('30 - 40'),
-('under 13'),
-('up 40');
+('over 40'),
+('under 13');
 
 -- --------------------------------------------------------
 
@@ -96,18 +96,6 @@ INSERT INTO `courses` (`course_num`, `course_name`, `hours`, `num_students`, `de
 -- --------------------------------------------------------
 
 --
--- Table structure for table `e-mails-templats`
---
-
-CREATE TABLE IF NOT EXISTS `e-mails-templats` (
-  `id_template` int(11) NOT NULL,
-  `head` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `experiences`
 --
 
@@ -121,8 +109,20 @@ CREATE TABLE IF NOT EXISTS `experiences` (
 
 INSERT INTO `experiences` (`type`) VALUES
 ('advanced'),
-('begginers'),
-('without eperience');
+('beginner'),
+('inexperienced');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mail_templates`
+--
+
+CREATE TABLE IF NOT EXISTS `mail_templates` (
+  `id_template` int(11) NOT NULL,
+  `head` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `sent_mails` (
 --
 
 CREATE TABLE IF NOT EXISTS `statuses` (
-  `id_status` int(20) NOT NULL,
+  `id_status` int(10) NOT NULL,
   `status_type` varchar(100) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
@@ -173,10 +173,10 @@ CREATE TABLE IF NOT EXISTS `statuses` (
 --
 
 INSERT INTO `statuses` (`id_status`, `status_type`) VALUES
-(4, 'approved'),
-(1, 'confirmed'),
+(1, 'approved'),
 (3, 'declined'),
-(2, 'not confirmed');
+(2, 'not approved'),
+(4, 'rejected');
 
 -- --------------------------------------------------------
 
@@ -186,8 +186,8 @@ INSERT INTO `statuses` (`id_status`, `status_type`) VALUES
 
 CREATE TABLE IF NOT EXISTS `students` (
   `student_id` int(11) NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  `last_name` varchar(50) NOT NULL,
+  `first_name` varchar(20) NOT NULL,
+  `last_name` varchar(20) NOT NULL,
   `age` varchar(100) NOT NULL,
   `occupation` varchar(60) NOT NULL,
   `previous_experience` varchar(100) NOT NULL,
@@ -204,9 +204,9 @@ CREATE TABLE IF NOT EXISTS `students` (
 --
 
 INSERT INTO `students` (`student_id`, `first_name`, `last_name`, `age`, `occupation`, `previous_experience`, `mail`, `course`, `phone`, `implementation`, `contribution`, `status`) VALUES
-(1, 'Мартин', 'Найтън', 'under 13', 'other', 'begginers', 'mail@mail.mail', '101', 101, '', '', ''),
-(2, 'Георги', 'Геогриев', '20 - 29', 'employed', 'advanced', 'mail@mail.mail', 'java', 888888999, 'some', 'random', 'declined'),
-(3, 'Petyr', 'Petrov', '30 - 40', 'schoolboy / schoolgirl', 'without eperience', 'some@mai.bg', 'php', 889798465, 'dont know', 'dont know', 'approved');
+(1, 'Ivan', 'Ivanov', '20 - 29', 'employed', 'beginner', 'asdfasdf@fsd.fsd', 'php', 656565, 'asdfsaf', 'asdf', 'declined'),
+(2, 'Petar', 'Petrov', 'over 40', 'schoolboy / schoolgirl', 'inexperienced', 'sadd@fsd.bg', 'php', 55956655, 'sdfasdfasdf', 'asdfasdf', 'approved'),
+(3, 'George', 'Takei', '30 - 40', 'unemployed', 'advanced', 'asdf@fasd.fad', 'java', 898656886, 'asaasdf', 'asdfasdf', 'approved');
 
 --
 -- Indexes for dumped tables
@@ -231,16 +231,16 @@ ALTER TABLE `courses`
   ADD PRIMARY KEY (`course_num`), ADD KEY `course_name` (`course_name`);
 
 --
--- Indexes for table `e-mails-templats`
---
-ALTER TABLE `e-mails-templats`
-  ADD PRIMARY KEY (`id_template`);
-
---
 -- Indexes for table `experiences`
 --
 ALTER TABLE `experiences`
   ADD PRIMARY KEY (`type`);
+
+--
+-- Indexes for table `mail_templates`
+--
+ALTER TABLE `mail_templates`
+  ADD PRIMARY KEY (`id_template`);
 
 --
 -- Indexes for table `occupations`
@@ -258,22 +258,22 @@ ALTER TABLE `sent_mails`
 -- Indexes for table `statuses`
 --
 ALTER TABLE `statuses`
-  ADD PRIMARY KEY (`id_status`), ADD UNIQUE KEY `status_type` (`status_type`);
+  ADD PRIMARY KEY (`id_status`), ADD UNIQUE KEY `status_type` (`status_type`), ADD KEY `id_status` (`id_status`);
 
 --
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
-  ADD PRIMARY KEY (`student_id`), ADD KEY `age` (`age`), ADD KEY `age_2` (`age`), ADD KEY `previous_experience` (`previous_experience`), ADD KEY `ocupation` (`occupation`), ADD KEY `cource` (`course`), ADD KEY `age_3` (`age`), ADD KEY `ocupation_2` (`occupation`), ADD KEY `course` (`course`), ADD KEY `status` (`status`), ADD KEY `status_2` (`status`), ADD KEY `course_2` (`course`);
+  ADD PRIMARY KEY (`student_id`), ADD UNIQUE KEY `student_id_2` (`student_id`), ADD KEY `age` (`age`), ADD KEY `age_2` (`age`), ADD KEY `previous_experience` (`previous_experience`), ADD KEY `ocupation` (`occupation`), ADD KEY `cource` (`course`), ADD KEY `age_3` (`age`), ADD KEY `ocupation_2` (`occupation`), ADD KEY `course` (`course`), ADD KEY `status` (`status`), ADD KEY `status_2` (`status`), ADD KEY `course_2` (`course`), ADD KEY `student_id` (`student_id`), ADD FULLTEXT KEY `first_name` (`first_name`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `e-mails-templats`
+-- AUTO_INCREMENT for table `mail_templates`
 --
-ALTER TABLE `e-mails-templats`
+ALTER TABLE `mail_templates`
   MODIFY `id_template` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `sent_mails`
@@ -284,7 +284,7 @@ ALTER TABLE `sent_mails`
 -- AUTO_INCREMENT for table `statuses`
 --
 ALTER TABLE `statuses`
-  MODIFY `id_status` int(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id_status` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `students`
 --

@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
 	<title>Admin Panel</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
 <?php 
 session_start();
-$conn = mysqli_connect('localhost', 'root', '', 'vratsad_code-week1');
+$conn = mysqli_connect('localhost', 'root', '', 'vratsad_code-week');
 if (!$conn) {
 	die("Connection failed: mysqli_connect_error()"); 
 } else {
-	//echo "Connected successfully!";
 }
 ?>
 	<h3>Code Week 2015</h3>
@@ -39,7 +38,7 @@ if (!empty($_POST)) {
 	if ($password_row['password'] !== $_SESSION['password']) {
 		echo "Wrong username/password!";
 	} else {
-		header('Location: welcome.php');
+		header('Location: page1_admin.php');
 	}
 }
 ?>
