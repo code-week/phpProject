@@ -1,5 +1,4 @@
 <?php
-	//session_start();
 	//create connection
 	$conn = mysqli_connect('localhost', 'root', '', 'vratsad_code-week');
 	if (!$conn) {
@@ -25,7 +24,6 @@ if (isset($_POST['submit'])) {
 	$x = $_POST['age'];
 	$y = $_POST['occupation'];
 	$e = $_POST["level"];
-	//$c = $_POST["mail"];
 	$d = $_POST["course_name"];
 	if (isset($_POST['submit'])) {
 	$errors2 = array();
@@ -90,7 +88,7 @@ if(isset($_GET['reg'])){
 <form method="post" action="page1.php" class="form-horizontal">
 <div class="row">
 	<div class="col-xs-2 col-offset-1"> </div>
-  	<div class="col-xs-6"> <h1 style="color:blue"> CodeWeek <img src="mouse.jpg" width="180" height="150" alt="picture" class="img-circle"> </h1> </div>
+  	<div class="col-xs-6"> <h1 style="color:blue"> CodeWeek <img src= "mouse.jpg" width="180" height="150" alt="picture" class="img-circle"> </h1> </div>
 </div>
 <div class="row">
 	<div class="col-xs-2 col-offset-1"> </div> 
@@ -103,7 +101,7 @@ if(isset($_GET['reg'])){
   		<div class="form-group">
     	<label for="first_name" class="col-xs-2 control-label">Име*</label>
     	<div class="col-xs-10">
-      	<input type="first_name" class="form-control" id="first_name" placeholder="Име">
+      	<input type="first_name" class="form-control" name="first_name" placeholder="Име">
       	<?php echo "<span class='error-msg'> $errors[first_name] </span>"; ?><br/>
     </div>
   </div>	
@@ -111,7 +109,7 @@ if(isset($_GET['reg'])){
 		<div class="form-group">
     	<label for="last_name" class="col-xs-2 control-label">Фамилия*</label>
     	<div class="col-xs-10">
-      	<input type="last_name" class="form-control" id="last_name" placeholder="Фамилия">
+      	<input type="last_name" class="form-control" name="last_name" placeholder="Фамилия">
       	<?php echo "<span class='error-msg'> $errors1[last_name] </span>"; ?><br/>
     </div>
   </div>	
@@ -119,105 +117,111 @@ if(isset($_GET['reg'])){
 		<div class="form-group">
     	<label for="mail" class="col-xs-2 control-label">Email*</label>
     	<div class="col-xs-10">
-      	<input type="email" class="form-control" id="mail" placeholder="Email">
+      	<input type="email" class="form-control" name="mail" placeholder="Email">
     </div>
   </div>
   		<br/>
   		<div class="form-group">
     	<label for="phone" class="col-xs-2 control-label">Телефон*</label>
     	<div class="col-xs-10">
-      	<input type="phone" class="form-control" id="phone" placeholder="Телефон">
+      	<input type="phone" class="form-control" name="phone" placeholder="Телефон">
       	<?php echo "<span class='error-msg'> $errors2[phone] </span>"; ?><br/>
     </div>
   </div>
-
-  		<br/>
   		<div class="col-xs-10">
 		<h4> Изберете курс, който искате да запишете </h4> 
-  		<div class="dropdown">
-  <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Курс
-    <span class="caret"></span>
-  </button>
+  		<div class="form-group">
+		<label for="course_name" class="col-xs-2 control-label">Курс</label>
+		<div class="col-xs-10">
+		<select name="course_name" id="course_name" class="form-control">
   	<?php
   	$sel_course = "SELECT course_name FROM `courses`";
 	$rescourse = mysqli_query($conn, $sel_course);
-  	echo "<ul class='dropdown-menu' aria-labelledby='dropdownMenu1'>";
+  	
     if (mysqli_num_rows($rescourse) > 0) {
-    	while ($row = mysqli_fetch_assoc($rescourse)) {
-    		echo "<li><a href='#'>$row[course_name]</a></li>";
-    	}
-    }
-  	echo "</ul>";
+     
+     while($row = mysqli_fetch_assoc($rescourse)) {
+         foreach ($row as $key => $value) {
+         	echo "<option value='$value' ";
+         	if ($row['course_name'] == $value) {
+         		echo "selected";
+         	}
+         	echo ">".$value."</option>";
+         }
+     }
+} 
+		echo ">".$value."</option>";
+		
   	?>
+  	</select>
 </div>
+		<br/>
 		<br/>
 		<div class="col-xs-10">
 		<h4>Какъв опит имате по темата на курса?</h4> 
-		<label class="radio-inline">
-  	<input type="radio" name="level" id="level1" value="without experience">нямам опит
-	</label>
-	<label class="radio-inline">
-  	<input type="radio" name="level" id="level2" value="begginer"> начинаещ
-	</label>
-	<label class="radio-inline">
-  	<input type="radio" name="level" id="level3" value="advanced"> напреднал
-	</label>
-		</div>
+	<?php
+	mysqli_query($conn, "SET NAMES UTF8");
+  	$sel_exp = "SELECT type FROM `experiences`";
+	$resexp = mysqli_query($conn, $sel_exp);
+    if (mysqli_num_rows($resexp) > 0) {
+    	while ($row = mysqli_fetch_assoc($resexp)) {
+    		echo "<label class='radio-inline'>";
+    		echo "<input type='radio' name='level' id='level1' value='$row[type]'>$row[type]";
+			echo "</label>";
+    	}
+    }
+  	?>
+	</div>
 		<br/>
 		<br/>
 		<div class="col-xs-10">
 		<br/>
 		<h4> С какво се занимавате в момента? </h4>
-		<label class="radio-inline">
-	<input type="radio" name="occupation" id="$resocc2" value="schoolarboy"> ученик
-	</label>
-	<label class="radio-inline">
-  	<input type="radio" name="occupation" id="$resocc3" value="student"> студент
-	</label>
-	<label class="radio-inline">
-  	<input type="radio" name="occupation" id="resocc1" value="unempoyed"> безработен
-	</label>
-	<label class="radio-inline">
-	<input type="radio" name="occupation" id="resocc" value="employed"> зает
-	</label>
-	<label class="radio-inline">
-  	<input type="radio" name="occupation" id="resocc4" value="other"> друго
-	</label>
-	</div>
-	<br/> 
-	<br/>
-	<div class="col-xs-10">
-	<br/>
-	<h4>Възраст: </h4>
-		<label class="radio-inline">
-		<input type="radio" name="age" id="age1" value="13"> под 13 години
-		</label>
-		<label class="radio-inline">
-  		<input type="radio" name="age" id="age2" value="13-19"> 13 - 19 години
-		</label>
-		<label class="radio-inline">
-  		<input type="radio" name="age" id="age3" value="20-29"> 20 - 29 години
-		</label>
-		<label class="radio-inline">
-		<input type="radio" name="age" id="age4" value="30-40"> 30 - 40 години
-		</label>
-		<label class="radio-inline">
-  		<input type="radio" name="age" id="age5" value="up 40"> над 40 години
-		</label>
+		<?php
+		mysqli_query($conn, "SET NAMES UTF8");
+  		$sel_occ = "SELECT type_occupation FROM `occupations`";
+		$resocc = mysqli_query($conn, $sel_occ);
+  	
+    	if (mysqli_num_rows($resocc) > 0) {
+    	while ($row = mysqli_fetch_assoc($resocc)) {
+    		echo "<label class='radio-inline'>";
+    		echo "<input type='radio' name='occupation' id='occupation' value='$row[type_occupation]'>$row[type_occupation]";
+			echo "</label>";
+    		}
+    	}
+  		?>
 		</div>
 		<br/> 
 		<br/>
 		<div class="col-xs-10">
 		<br/>
-		h4>Ще използвате ли наученото на събитието в последствие и как? <br/></h4>
-		<input type="text" name="implementation" class="form-control" placeholder="Text input">  <br/>
+		<h4>Възраст: </h4>
+		<?php
+		mysqli_query($conn, "SET NAMES UTF8");
+  		$sel_age = "SELECT age_group FROM `ages`";
+		$resage = mysqli_query($conn, $sel_age);
+  	
+    	if (mysqli_num_rows($resage) > 0) {
+    	while ($row = mysqli_fetch_assoc($resage)) {
+    		echo "<label class='radio-inline'>";
+    		echo "<input type='radio' name='age' id='age' value='$row[age_group]'>$row[age_group]";
+			echo "</label>";
+    	}
+    }
+  	?>
+		</div>
+		<br/> 
+		<br/>
+		<div class="col-xs-10">
+		<br/>
+		<h4>Ще използвате ли наученото на събитието в последствие и как? <br/></h4>
+		<textarea class="form-control" rows="3" name="implementation" placeholder="Text input"></textarea> <br/>
 		</div>
 		<br/>
 		<div class="col-xs-10">
 		<h4>Как то би допринесло за бъдещото ви развитие?</h4>
-		<input type="text" name="contribution" class="form-control" placeholder="Text input"> <br/>
-		<input type="submit" name="submit" value="Регистрация">
+		<textarea class="form-control" rows="3" name="contribution" placeholder="Text input"></textarea> <br/>
+		<input class="btn btn-primary" type="submit" name="submit" value="Регистрация">
 		</div>
 </div>
 </form>
