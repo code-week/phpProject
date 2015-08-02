@@ -1,5 +1,6 @@
 <head>
 <link rel="stylesheet" type="text/css" href="style.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <?php 
 //create connection
@@ -8,7 +9,7 @@ $conn = mysqli_connect('localhost', 'root', '', 'vratsad_code-week');
 if (!$conn) {
 	die ("Connection failed: mysqli_connect_error()");
 } 
-
+	mysqli_query($conn, "SET NAMES UTF8");
 	$status_query = "SELECT status_type FROM statuses";
 	$status_result = mysqli_query($conn, $status_query);
 	if (!empty($_GET['id'])) {
