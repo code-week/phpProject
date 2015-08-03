@@ -2,14 +2,13 @@
 <br/>
 <br/>
 <?php
+$page_name = "Students";
 require_once('header.php');
-
 	if(!empty($_POST['send'])){
 		foreach ($_POST['selected'] as $key => $value) {
 			echo "$key - $value <br>";
 		}
 	}
-
 	$page_name = 'Students';
 	$no = 1;
 	$q = "SELECT first_name, 
@@ -23,16 +22,21 @@ require_once('header.php');
 	contribution,
 	status
 	FROM students";
-
 	if (isset($_POST['filter'])) {
+		if ($_POST['filter_status'] == null) {
+		$search_term2 = mysqli_real_escape_string($conn, $_POST['filter_course']);
+		$q .= " WHERE course = '$search_term2'";
+	} elseif ($_POST['filter_course'] == null) {
 		$search_term = mysqli_real_escape_string($conn, $_POST['filter_status']);
 		$q .= " WHERE status = '$search_term'";
+	} else {
+		$search_term = mysqli_real_escape_string($conn, $_POST['filter_status']);
+		$search_term2 = mysqli_real_escape_string($conn, $_POST['filter_course']);
+		$q .= " WHERE status = '$search_term' AND course = '$search_term2'";
+	}
+		
 	}
 	echo $q;
-
-
-
-
 	$q_1 = "SELECT student_id FROM students";
 	$result = mysqli_query($conn, $q);
 	$result_1 = mysqli_query($conn, $q_1);
@@ -79,28 +83,17 @@ echo "</table></dic>";
 
 <form method="POST" action="index.php">
 	<select name="filter_status" > 
+		<option value= ""></option>
 		<option value="confirmed">confirmed</option>
 		<option value="declined">declined</option>
 		<option value="rejected">rejected</option>
 		<option value="pending">pending</option>
 		<option value="unconfirmed">unconfirmed</option>
 	</select>
-	<input type="submit" name="filter">
-</form>
-
-
-<?php 
-$qu = "SELECT * FROM students ";
-
-if (isset($_POST['filter2'])) {
-	$search_term2 = mysqli_real_escape_string($_POST['filter_course']);
-}
-$qu .= "WHERE status = '[$search_term2]'";
-?>
-<form method="POST" action="index.php">
-	<select name="filter_course"> 
+	<select name="filter_course">
+	<option value= ""></option> 
 		<option value="php">php</option>
 		<option value="java">java</option>
 	</select>
-	<input type="submit" name="filter2">
+	<input type="submit" name="filter">
 </form>
