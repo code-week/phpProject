@@ -1,3 +1,10 @@
 table {
     word-wrap: inherit;
 }
+
+.error-msg{
+	color: red;
+}
+.welcome-msg{
+	color: orange;
+}

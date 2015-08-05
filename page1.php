@@ -21,9 +21,31 @@ if (isset($_POST['submit'])) {
 		$errors1['last_name'] = "Моля въведете фамилия";
 	}
 }
-	$x = $_POST['age'];
-	$y = $_POST['occupation'];
-	$e = $_POST["level"];
+if (isset($_POST['submit'])) {
+	$errors4 = array();
+	$x = trim($_POST['age']);
+	if(!isset($x) or empty($x))
+	{
+		$errors4['age'] = "Моля въведете възрастова група";
+	}
+}
+
+if (isset($_POST['submit'])) {
+	$errors5 = array();
+	$y = trim($_POST['occupation']);
+	if(!isset($y) or empty($y))
+	{
+		$errors5['occupation'] = "Моля въведете статус";
+	}
+}
+	if (isset($_POST['submit'])) {
+	$errors3 = array();
+	$e = trim($_POST['level']);
+	if(!isset($e) or empty($e))
+	{
+		$errors3['level'] = "Моля въведете опит";
+	}
+}
 	$d = $_POST["course_name"];
 	if (isset($_POST['submit'])) {
 	$errors2 = array();
@@ -57,11 +79,13 @@ if (isset($_POST['submit'])) {
 		}
 	}
 }else{
-	//$b = '';
 	$errors = array();
 	$errors['first_name'] = '';
 	$errors1['last_name'] = '';
 	$errors2['phone'] = '';
+	$errors3['level'] = '';
+	$errors4['age'] = '';
+	$errors5['occupation'] = '';
 }
 ?>
 
@@ -81,14 +105,14 @@ if(isset($_GET['reg'])){
 	$course = $_GET['course'];
 	$registered = $_GET['reg'];
 	if ($registered) {
-		echo "<p>Благодарим, че се регистрирахте за CodeWeek-Враца 2015г. Ще получите email за потвърждение сега и седмица преди събитието email с подробности за вашия модул - $course </p>";
+		echo "<p class='welcome-msg'>Благодарим, че се регистрирахте за CodeWeek-Враца 2015г. Ще получите email за потвърждение сега и седмица преди събитието email с подробности за вашия модул - $course </p>";
 	}
 }
 ?>
 <form method="post" action="page1.php" class="form-horizontal">
 <div class="row">
 	<div class="col-xs-2 col-offset-1"> </div>
-  	<div class="col-xs-6"> <h1 style="color:blue"> CodeWeek <img src= "mouse.jpg" width="180" height="150" alt="picture" class="img-circle"> </h1> </div>
+  	<div class="col-xs-6"> <h1 style="color:blue"> CodeWeek <img src= "http://localhost/demo-php/proba/mouse.jpg" width="180" height="150" alt="picture" class="img-circle"> </h1> </div>
 </div>
 <div class="row">
 	<div class="col-xs-2 col-offset-1"> </div> 
@@ -168,9 +192,11 @@ if(isset($_GET['reg'])){
     		echo "<label class='radio-inline'>";
     		echo "<input type='radio' name='level' id='level1' value='$row[type]'>$row[type]";
 			echo "</label>";
+			echo "<br/>";
     	}
     }
   	?>
+  	<?php echo "<span class='error-msg'> $errors3[level] </span>"; ?><br/>
 	</div>
 		<br/>
 		<br/>
@@ -187,9 +213,11 @@ if(isset($_GET['reg'])){
     		echo "<label class='radio-inline'>";
     		echo "<input type='radio' name='occupation' id='occupation' value='$row[type_occupation]'>$row[type_occupation]";
 			echo "</label>";
+			echo "<br/>";
     		}
     	}
   		?>
+  		<?php echo "<span class='error-msg'> $errors5[occupation] </span>"; ?><br/>
 		</div>
 		<br/> 
 		<br/>
@@ -206,9 +234,11 @@ if(isset($_GET['reg'])){
     		echo "<label class='radio-inline'>";
     		echo "<input type='radio' name='age' id='age' value='$row[age_group]'>$row[age_group]";
 			echo "</label>";
+			echo "<br/>";
     	}
     }
   	?>
+  	<?php echo "<span class='error-msg'> $errors4[age] </span>"; ?><br/>
 		</div>
 		<br/> 
 		<br/>
