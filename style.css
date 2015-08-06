@@ -1,10 +1,28 @@
-table {
-    word-wrap: inherit;
+h1 {
+	color: blue;
+	font-family: "Times New Roman";
+    font-size: 70px;
+    font-weight: bold;
+
 }
 
-.error-msg{
+.error-msg {
 	color: red;
+	font-style: italic;
+	font-size: 15px;
 }
-.welcome-msg{
-	color: orange;
+
+.welcome {
+    color: orange;
+    font-size: 20px;
+    text-align: center;
+    font-style: italic;
 }
+h4 {
+	font-weight: bold;
+}
+h3{
+	color: blue;
+	text-align: center;
+}
+

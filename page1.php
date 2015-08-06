@@ -96,7 +96,8 @@ if (isset($_POST['submit'])) {
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     
-    <link rel="stylesheet" href="style.css"><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -105,18 +106,26 @@ if(isset($_GET['reg'])){
 	$course = $_GET['course'];
 	$registered = $_GET['reg'];
 	if ($registered) {
-		echo "<p class='welcome-msg'>Благодарим, че се регистрирахте за CodeWeek-Враца 2015г. Ще получите email за потвърждение сега и седмица преди събитието email с подробности за вашия модул - $course </p>";
+		echo "<div class='row'>";
+		echo "<div class='col-xs-2 col-offset-1'>";
+		echo "</div>";
+		echo "<div class='col-xs-6'>";
+		echo "<span style='color: orange; text-align: center;'> Благодарим, че се регистрирахте за CodeWeek-Враца 2015г. </span>";
+		echo "<br/>";
+		echo "<span style='color: orange; text-align: center;'>Ще получите email за потвърждение сега и седмица преди събитието email с подробности за вашия модул - $course </span>";
+		echo "</div>";
+		echo "</div>";
 	}
 }
 ?>
 <form method="post" action="page1.php" class="form-horizontal">
 <div class="row">
 	<div class="col-xs-2 col-offset-1"> </div>
-  	<div class="col-xs-6"> <h1 style="color:blue"> CodeWeek <img src= "http://localhost/demo-php/proba/mouse.jpg" width="180" height="150" alt="picture" class="img-circle"> </h1> </div>
+  	<div class="col-xs-6"> <h1> CodeWeek <img src= "http://localhost/demo-php/proba/mouse.jpg" width="180" height="150" alt="picture" class="img-circle"> </h1> </div>
 </div>
 <div class="row">
 	<div class="col-xs-2 col-offset-1"> </div> 
-	<div class="col-xs-6"> <h3 style="color:blue; text-align:center;"> Форма за регистрация за участие в безплатен курс в рамките на Code Week 2015 година </h3> </div>
+	<div class="col-xs-6"> <h3> Форма за регистрация за участие в безплатен курс в рамките на Code Week 2015 година </h3> </div>
 </div>
 <div class="row">
     <div class="col-xs-2 col-offset-1"> </div>
