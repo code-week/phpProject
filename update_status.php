@@ -21,7 +21,7 @@
 	<div class="col-xs-8 col-xs-offset-2">
 		
 		<div class="col-xs-10 col-xs-offset-1">
-			<h2>Change User №<?php echo $no?> </h2>
+			<h2>Change User №<?php echo $id?> </h2>
 		</div>		
 		<form class="form-horizontal" method="post" action="update_status.php">
 			<input type="hidden" name="id" value="<?php echo $id;?>">

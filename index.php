@@ -1,6 +1,32 @@
 <a class='btn btn-success' href='page1_admin.php' role='button'>Back to main menu</a>
 <br/>
 <br/>
+<script language="JavaScript">
+function toggle(source) {
+  checkboxes = document.getElementsByName('selected[]');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+</script>
+<form method="POST" action="index.php">
+	<select name="filter_status" > 
+		<option value= ""></option>
+		<option value="approved">approved</option>
+		<option value="declined">declined</option>
+		<option value="rejected">rejected</option>
+		<option value="pending">pending</option>
+		<option value="not approved">not approved</option>
+	</select>
+	<select name="filter_course">
+	<option value= ""></option> 
+		<option value="PHP/MYSQL">PHP/MYSQL</option>
+		<option value="Android">Android</option>
+		<option value="java">java</option>
+		<option value="Wordpress/HTML">Wordpress/HTML</option>
+	</select>
+	<input type="submit" name="filter">
+</form>
 <?php
 $page_name = "Students";
 require_once('header.php');
@@ -11,17 +37,7 @@ require_once('header.php');
 	}
 	$page_name = 'Students';
 	$no = 1;
-	$q = "SELECT first_name, 
-	last_name, 
-	age, 
-	occupation, 
-	previous_experience, 
-	mail, course,
-	phone,
-	implementation,
-	contribution,
-	status
-	FROM students";
+	$q = "SELECT * FROM students";
 	if (isset($_POST['filter'])) {
 		if ($_POST['filter_status'] == null) {
 		$search_term2 = mysqli_real_escape_string($conn, $_POST['filter_course']);
@@ -36,16 +52,14 @@ require_once('header.php');
 	}
 		
 	}
-	echo $q;
-	$q_1 = "SELECT student_id FROM students";
 	$result = mysqli_query($conn, $q);
-	$result_1 = mysqli_query($conn, $q_1);
 	echo "<form method='post' action='send_email.php' name='checkbox'>";
-	echo "<table class='table table-bordered'>";
+	echo "<div class='text-right'><input type='checkbox' onClick='toggle(this)' /> Select ALL</div>";
+	echo "<table class='table-responsive table-striped table-bordered'>";
 	
 	if (mysqli_num_rows($result) > 0  ) {
 		echo "<tr>
-		<td>No</td>
+		<td>ID</td>
 		<td>First Name</td>
 		<td>Last Name</td>
 		<td>Age</td>
@@ -60,17 +74,23 @@ require_once('header.php');
 		<td>Edit Status</td>
 		<td>Select</td>
 	</tr>";
+	echo "<tr>";
 	while ($row = mysqli_fetch_assoc($result)) {
-		echo "<tr><td>$no</td>";
-		
-		foreach ($row as $value) {
-			echo "<td>".$value."</td>";			
-		}
-		$row_1 = mysqli_fetch_assoc($result_1);
-		$id = $row_1['student_id'];
-		echo "<td><a href='update_status.php?id=$id&no=$no' class='btn btn-info' id='$id' role='button'>UPDATE</td>";
-		$no++;
-		echo "<td><input type='checkbox' value='$row_1[student_id]' name='selected[]'></td>";
+		echo "<td>$row[student_id]</td>";
+		echo "<td>$row[first_name]</td>";
+		echo "<td>$row[last_name]</td>";
+		echo "<td>$row[age]</td>";
+		echo "<td>$row[occupation]</td>";
+		echo "<td>$row[previous_experience]</td>";
+		echo "<td>$row[mail]</td>";
+		echo "<td>$row[course]</td>";
+		echo "<td>$row[phone]</td>";
+		echo "<td>$row[implementation]</td>";
+		echo "<td>$row[contribution]</td>";
+		echo "<td>$row[status]</td>";
+		$id = $row['student_id'];
+		echo "<td><a href='update_status.php?id=$id' class='btn btn-info' id='$id' role='button'>UPDATE</td>";
+		echo "<td><input type='checkbox' value='$row[student_id]' name='selected[]'></td>";
 		echo "</tr>";
 	}
 }
@@ -78,22 +98,6 @@ echo "</table></dic>";
 ?>
 	<a class='btn btn-success' href='page1_admin.php' role='button'>Back to main menu</a>
 	<input type="submit" class='btn btn-info' value="Send to Selected" name="send">
-	<a class='btn btn-danger' href='send_email.php' role='button'>Send E-mail to all</a><br/>
+	
 </form>
 
-<form method="POST" action="index.php">
-	<select name="filter_status" > 
-		<option value= ""></option>
-		<option value="confirmed">confirmed</option>
-		<option value="declined">declined</option>
-		<option value="rejected">rejected</option>
-		<option value="pending">pending</option>
-		<option value="unconfirmed">unconfirmed</option>
-	</select>
-	<select name="filter_course">
-	<option value= ""></option> 
-		<option value="php">php</option>
-		<option value="java">java</option>
-	</select>
-	<input type="submit" name="filter">
-</form>

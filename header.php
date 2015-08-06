@@ -14,7 +14,6 @@ if (!$conn) {
 	$status_result = mysqli_query($conn, $status_query);
 	if (!empty($_GET['id'])) {
 		$id = $_GET['id'];
-		$no = $_GET['no'];
 	}	
 ?>
 <!DOCTYPE html>

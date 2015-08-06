@@ -14,7 +14,6 @@ $page_name = 'Send Emails';
 			}
 			$id_mail= substr($id_mail, 0, -2);
 	}
-
 	if(!empty($_POST['Send2'])){
 			$mail= mysqli_query($conn, "SELECT mail FROM students WHERE student_id IN($_POST[id_mail])");
 			echo "SELECT mail FROM students WHERE student_id IN($_POST[id_mail]) ";
@@ -31,7 +30,6 @@ $page_name = 'Send Emails';
 		}
 ?>
 <form name='mail2' method='post' action='send_email.php'><br/>
-<input type="hidden" name="id_mail" value="<?php echo $id_mail; ?>">
 	<br/>
 
 <input type='text' name='head' placeholder='header'>
@@ -40,5 +38,5 @@ $page_name = 'Send Emails';
 
 <textarea name='body' rows="4" cols="50" placeholder='body'></textarea><br/>
 <br/>
-<input class='btn btn-danger'type='submit' name="Send2" value='Send2'>
+<input class='btn btn-danger'type='submit' name="Send2" value='Send'>
 </form>
