@@ -1,0 +1,668 @@
+PHP функции за низове
+
+•explode() - Breaks a string into an array 
+Examples
+Example #1 explode() examples
+<?php
+// Example 1
+$pizza  = "piece1 piece2 piece3 piece4 piece5 piece6";
+$pieces = explode(" ", $pizza);
+echo $pieces[0]; // piece1
+echo $pieces[1]; // piece2
+
+// Example 2
+$data = "foo:*:1023:1000::/home/foo:/bin/sh";
+list($user, $pass, $uid, $gid, $gecos, $home, $shell) = explode(":", $data);
+echo $user; // foo
+echo $pass; // *
+
+?> 
+Example #2 explode() return examples
+<?php
+/* 
+   A string that doesn't contain the delimiter will simply
+   return a one-length array of the original string.
+*/
+$input1 = "hello";
+$input2 = "hello,there";
+var_dump( explode( ',', $input1 ) );
+var_dump( explode( ',', $input2 ) );
+
+?> 
+The above example will output:
+array(1)
+(
+    [0] => string(5) "hello"
+)
+array(2)
+(
+    [0] => string(5) "hello"
+    [1] => string(5) "there"
+)
+Example #3 limit parameter examples
+<?php
+$str = 'one|two|three|four';
+
+// positive limit
+print_r(explode('|', $str, 2));
+
+// negative limit (since PHP 5.1)
+print_r(explode('|', $str, -1));
+?> 
+The above example will output:
+Array
+(
+    [0] => one
+    [1] => two|three|four
+)
+Array
+(
+    [0] => one
+    [1] => two
+    [2] => three
+)
+
+•implode() - Returns a string from the elements of an array 
+Examples 
+Example #1 implode() example
+<?php
+
+$array = array('lastname', 'email', 'phone');
+$comma_separated = implode(",", $array);
+
+echo $comma_separated; // lastname,email,phone
+
+// Empty string when using an empty array:
+var_dump(implode('hello', array())); // string(0) ""
+
+?>
+
+•ord() - Returns the ASCII value of the first character of a string 
+Examples 
+Example #1 ord() example
+<?php
+$str = "\n";
+if (ord($str) == 10) {
+    echo "The first character of \$str is a line feed.\n";
+}
+?>
+
+•chr() - Returns a character from a specified ASCII value 
+Examples 
+Example #1 chr() example
+<?php
+$str = "The string ends in escape: ";
+$str .= chr(27); /* add an escape character at the end of $str */
+
+/* Often this is more useful */
+
+$str = sprintf("The string ends in escape: %c", 27);
+?>
+
+•trim() - Removes whitespace or other characters from both sides of a string
+
+•md5() / sha1() - Calculates the MD5/SHA-1 hash of a string 
+Examples 
+Example #1 A md5() example
+<?php
+$str = 'apple';
+
+if (md5($str) === '1f3870be274f6c49b3e31a0c6728957f') {
+    echo "Would you like a green or red apple?";
+}
+?>
+
+<?php
+$str = 'apple';
+
+if (sha1($str) === 'd0be2dc421be4fcd0172e5afceea3970e2f3d940') {
+    echo "Would you like a green or red apple?";
+}
+?>
+
+
+•nl2br() - Inserts HTML line breaks in front of each newline in a string
+Description 
+string nl2br ( string $string [, bool $is_xhtml = true ] )
+Returns string with '<br />' or '<br>' inserted before all newlines (\r\n, \n\r, \n and \r).
+Examples 
+Example #1 Using nl2br()
+<?php
+echo nl2br("foo isn't\n bar");
+?>
+The above example will output:
+foo isn't<br />
+ bar
+Example #2 Generating valid HTML markup using the is_xhtml parameter
+<?php
+echo nl2br("Welcome\r\nThis is my HTML document", false);
+?>
+The above example will output:
+Welcome<br>
+This is my HTML document
+Example #3 Various newline separators
+<?php
+$string = "This\r\nis\n\ra\nstring\r";
+echo nl2br($string);
+?>
+The above example will output:
+This<br />
+is<br />
+a<br />
+string<br />
+
+
+•strlen() - Returns the length of a string 
+Examples 
+Example #1 A strlen() example
+<?php
+$str = 'abcdef';
+echo strlen($str); // 6
+
+$str = ' ab cd ';
+echo strlen($str); // 7
+?>
+
+•strpos()- Returns the position of the first occurrence of a string inside another string (case-sensitive) 
+Example
+Find the position of the first occurrence of "php" inside the string:
+<?php
+echo strpos("I love php, I love php too!","php");
+?>
+Example #1 stripos() examples
+<?php
+$findme    = 'a';
+$mystring1 = 'xyz';
+$mystring2 = 'ABC';
+
+$pos1 = stripos($mystring1, $findme);
+$pos2 = stripos($mystring2, $findme);
+
+// Nope, 'a' is certainly not in 'xyz'
+if ($pos1 === false) {
+    echo "The string '$findme' was not found in the string '$mystring1'";
+}
+// Note our use of ===.  Simply == would not work as expected
+// because the position of 'a' is the 0th (first) character.
+if ($pos2 !== false) {
+    echo "We found '$findme' in '$mystring2' at position $pos2";
+}
+?>
+
+•str_replace() - Replaces some characters in a string (case-sensitive) 
+Examples 
+Example #1 Basic str_replace() examples
+<?php
+// Provides: <body text='black'>
+$bodytag = str_replace("%body%", "black", "<body text='%body%'>");
+
+// Provides: Hll Wrld f PHP
+$vowels = array("a", "e", "i", "o", "u", "A", "E", "I", "O", "U");
+$onlyconsonants = str_replace($vowels, "", "Hello World of PHP");
+
+// Provides: You should eat pizza, beer, and ice cream every day
+$phrase  = "You should eat fruits, vegetables, and fiber every day.";
+$healthy = array("fruits", "vegetables", "fiber");
+$yummy   = array("pizza", "beer", "ice cream");
+
+$newphrase = str_replace($healthy, $yummy, $phrase);
+
+// Provides: 2
+$str = str_replace("ll", "", "good golly miss molly!", $count);
+echo $count;
+?>
+Example #2 Examples of potential str_replace() gotchas
+<?php
+// Order of replacement
+$str     = "Line 1\nLine 2\rLine 3\r\nLine 4\n";
+$order   = array("\r\n", "\n", "\r");
+$replace = '<br />';
+
+// Processes \r\n's first so they aren't converted twice.
+$newstr = str_replace($order, $replace, $str);
+
+// Outputs F because A is replaced with B, then B is replaced with C, and so on...
+// Finally E is replaced with F, because of left to right replacements.
+$search  = array('A', 'B', 'C', 'D', 'E');
+$replace = array('B', 'C', 'D', 'E', 'F');
+$subject = 'A';
+echo str_replace($search, $replace, $subject);
+
+// Outputs: apearpearle pear
+// For the same reason mentioned above
+$letters = array('a', 'p');
+$fruit   = array('apple', 'pear');
+$text    = 'a p';
+$output  = str_replace($letters, $fruit, $text);
+echo $output;
+?>
+
+•strtr()- Finds the first occurrence of a string inside another string 
+Examples
+Example #1 strstr() example
+<?php
+$email  = 'name@example.com';
+$domain = strstr($email, '@');
+echo $domain; // prints @example.com
+
+$user = strstr($email, '@', true); // As of PHP 5.3.0
+echo $user; // prints name
+?>
+
+•substr() - Returns a part of a string (Returns the portion of string specified by the start and length parameters.)
+Example #1 Using a negative start
+<?php
+$rest = substr("abcdef", -1);    // returns "f"
+$rest = substr("abcdef", -2);    // returns "ef"
+$rest = substr("abcdef", -3, 1); // returns "d"
+?>
+
+Example #2 Using a negative length
+<?php
+$rest = substr("abcdef", 0, -1);  // returns "abcde"
+$rest = substr("abcdef", 2, -1);  // returns "cde"
+$rest = substr("abcdef", 4, -4);  // returns false
+$rest = substr("abcdef", -3, -1); // returns "de"
+?>
+Examples 
+Example #3 Basic substr() usage
+<?php
+echo substr('abcdef', 1);     // bcdef
+echo substr('abcdef', 1, 3);  // bcd
+echo substr('abcdef', 0, 4);  // abcd
+echo substr('abcdef', 0, 8);  // abcdef
+echo substr('abcdef', -1, 1); // f
+
+// Accessing single characters in a string
+// can also be achieved using "square brackets"
+$string = 'abcdef';
+echo $string[0];                 // a
+echo $string[3];                 // d
+echo $string[strlen($string)-1]; // f
+
+?>
+Example #4 substr() casting behaviour
+<?php
+class apple {
+    public function __toString() {
+        return "green";
+    }
+}
+
+echo "1) ".var_export(substr("pear", 0, 2), true).PHP_EOL;
+echo "2) ".var_export(substr(54321, 0, 2), true).PHP_EOL;
+echo "3) ".var_export(substr(new apple(), 0, 2), true).PHP_EOL;
+echo "4) ".var_export(substr(true, 0, 1), true).PHP_EOL;
+echo "5) ".var_export(substr(false, 0, 1), true).PHP_EOL;
+echo "6) ".var_export(substr("", 0, 1), true).PHP_EOL;
+echo "7) ".var_export(substr(1.2e3, 0, 4), true).PHP_EOL;
+?>
+The above example will output:
+1) 'pe'
+2) '54'
+3) 'gr'
+4) '1'
+5) false
+6) false
+7) '1200'
+
+
+Регулярни изрази в PHP
+-preg_match() - търси в низ по регулярен израз 
+PHP - Validate Name
+
+$name = test_input($_POST["name"]);
+if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
+  $nameErr = "Only letters and white space allowed"; 
+}
+PHP - Validate E-mail
+$email = test_input($_POST["email"]);
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  $emailErr = "Invalid email format"; 
+}
+PHP - Validate URL
+$website = test_input($_POST["website"]);
+if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) {
+  $websiteErr = "Invalid URL"; 
+}
+
+
+
+
+PHP - Validate Name, E-mail, and URL
+Example
+<?php
+// define variables and set to empty values
+$nameErr = $emailErr = $genderErr = $websiteErr = "";
+$name = $email = $gender = $comment = $website = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["name"])) {
+    $nameErr = "Name is required";
+  } else {
+    $name = test_input($_POST["name"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
+      $nameErr = "Only letters and white space allowed"; 
+    }
+  }
+
+  if (empty($_POST["email"])) {
+    $emailErr = "Email is required";
+  } else {
+    $email = test_input($_POST["email"]);
+    // check if e-mail address is well-formed
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $emailErr = "Invalid email format"; 
+    }
+  }
+
+  if (empty($_POST["website"])) {
+    $website = "";
+  } else {
+    $website = test_input($_POST["website"]);
+    // check if URL address syntax is valid (this regular expression also allows dashes in the URL)
+    if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) {
+      $websiteErr = "Invalid URL"; 
+    }
+  }
+
+  if (empty($_POST["comment"])) {
+    $comment = "";
+  } else {
+    $comment = test_input($_POST["comment"]);
+  }
+
+  if (empty($_POST["gender"])) {
+    $genderErr = "Gender is required";
+  } else {
+    $gender = test_input($_POST["gender"]);
+  }
+}
+?>
+
+
+-preg_replace() - намира и заменя пример в низ по регулярен израз 
+Example #1 Using backreferences followed by numeric literals
+<?php
+$string = 'April 15, 2003';
+$pattern = '/(\w+) (\d+), (\d+)/i';
+$replacement = '${1}1,$3';
+echo preg_replace($pattern, $replacement, $string);
+?>
+Примерът по-горе ще изведе:
+April1,2003
+Example #2 Using indexed arrays with preg_replace()
+<?php
+$string = 'The quick brown fox jumped over the lazy dog.';
+$patterns[0] = '/quick/';
+$patterns[1] = '/brown/';
+$patterns[2] = '/fox/';
+$replacements[2] = 'bear';
+$replacements[1] = 'black';
+$replacements[0] = 'slow';
+echo preg_replace($patterns, $replacements, $string);
+?>
+Примерът по-горе ще изведе:
+The bear black slow jumped over the lazy dog.
+By ksorting patterns and replacements, we should get what we wanted.
+<?php
+ksort($patterns);
+ksort($replacements);
+echo preg_replace($patterns, $replacements, $string);
+?>
+Примерът по-горе ще изведе:
+The slow black bear jumped over the lazy dog.
+
+Example #3 Replacing several values
+<?php
+$patterns = array ('/(19|20)(\d{2})-(\d{1,2})-(\d{1,2})/',
+                   '/^\s*{(\w+)}\s*=/');
+$replace = array ('\3/\4/\1\2', '$\1 =');
+echo preg_replace($patterns, $replace, '{startDate} = 1999-5-27');
+?>
+Примерът по-горе ще изведе:
+$startDate = 5/27/1999
+Example #4 Using the 'e' modifier
+<?php
+preg_replace("/(<\/?)(\w+)([^>]*>)/e", 
+             "'\\1'.strtoupper('\\2').'\\3'", 
+             $html_body);
+?>
+This would capitalize all HTML tags in the input text.
+Example #5 Strip whitespace
+This example strips excess whitespace from a string.
+<?php
+$str = 'foo   o';
+$str = preg_replace('/\s\s+/', ' ', $str);
+// This will be 'foo o' now
+echo $str;
+?>
+Example #6 Using the count parameter
+<?php
+$count = 0;
+
+echo preg_replace(array('/\d/', '/\s/'), '*', 'xp 4 to', -1 , $count);
+echo $count; //3
+?>
+Примерът по-горе ще изведе:
+xp***to
+3
+
+Special Character Definitions
+\ Quote the next metacharacter
+^ Match the beginning of the line
+. Match any character (except newline)
+$ Match the end of the line (or before newline at the end)
+| Alternation
+() Grouping
+[] Character class
+* Match 0 or more times
++ Match 1 or more times
+? Match 1 or 0 times
+{n} Match exactly n times
+{n,} Match at least n times
+{n,m} Match at least n but not more than m times
+More Special Character Stuff
+\t tab (HT, TAB)
+\n newline (LF, NL)
+\r return (CR)
+\f form feed (FF)
+\a alarm (bell) (BEL)
+\e escape (think troff) (ESC)
+\033 octal char (think of a PDP-11)
+\x1B hex char
+\c[ control char
+\l lowercase next char (think vi)
+\u uppercase next char (think vi)
+\L lowercase till \E (think vi)
+\U uppercase till \E (think vi)
+\E end case modification (think vi)
+\Q quote (disable) pattern metacharacters till \E
+Even More Special Characters
+\w Match a "word" character (alphanumeric plus "_")
+\W Match a non-word character
+\s Match a whitespace character
+\S Match a non-whitespace character
+\d Match a digit character
+\D Match a non-digit character
+\b Match a word boundary
+\B Match a non-(word boundary)
+\A Match only at beginning of string
+\Z Match only at end of string, or before newline at the end
+\z Match only at end of string
+\G Match only where previous m//g left off (works only with /g)
+
+-preg_split() — разделя низ по регулярен израз
+array preg_split ( string $pattern , string $subject [, int $limit = -1 [, int $flags = 0 ]] )
+Split the given string by a regular expression.
+Examples 
+Example #1 preg_split() example : Get the parts of a search string
+<?php
+// split the phrase by any number of commas or space characters,
+// which include " ", \r, \t, \n and \f
+$keywords = preg_split("/[\s,]+/", "hypertext language, programming");
+print_r($keywords);
+?>
+The above example will output:
+Array
+(
+    [0] => hypertext
+    [1] => language
+    [2] => programming
+)
+Example #2 Splitting a string into component characters
+<?php
+$str = 'string';
+$chars = preg_split('//', $str, -1, PREG_SPLIT_NO_EMPTY);
+print_r($chars);
+?>
+The above example will output:
+Array
+(
+    [0] => s
+    [1] => t
+    [2] => r
+    [3] => i
+    [4] => n
+    [5] => g
+)
+
+Example #3 Splitting a string into matches and their offsets
+<?php
+$str = 'hypertext language programming';
+$chars = preg_split('/ /', $str, -1, PREG_SPLIT_OFFSET_CAPTURE);
+print_r($chars);
+?>
+The above example will output:
+Array
+(
+    [0] => Array
+        (
+            [0] => hypertext
+            [1] => 0
+        )
+
+    [1] => Array
+        (
+            [0] => language
+            [1] => 10
+        )
+
+    [2] => Array
+        (
+            [0] => programming
+            [1] => 19
+        )
+
+)
+
+
+
+
+
+
+
+
+
+•	addcslashes — Quote string with slashes in a C style
+•	addslashes — Quote string with slashes 
+string addslashes ( string $str )
+Returns a string with backslashes before characters that need to be escaped. These characters are single quote ('), double quote ("), backslash (\) and NUL (the NULL byte).
+•	bin2hex — Convert binary data into hexadecimal representation
+•	chop — Alias of rtrim
+•	chr — Return a specific character
+•	chunk_split — Split a string into smaller chunks
+•	convert_cyr_string — Convert from one Cyrillic character set to another
+•	convert_uudecode — Decode a uuencoded string
+•	convert_uuencode — Uuencode a string
+•	count_chars — Return information about characters used in a string
+•	crc32 — Calculates the crc32 polynomial of a string
+•	crypt — One-way string hashing
+•	echo — Output one or more strings
+•	explode — Split a string by string
+•	fprintf — Write a formatted string to a stream
+•	get_html_translation_table — Returns the translation table used by htmlspecialchars and htmlentities
+•	hebrev — Convert logical Hebrew text to visual text
+•	hebrevc — Convert logical Hebrew text to visual text with newline conversion
+•	hex2bin — Decodes a hexadecimally encoded binary string
+•	html_entity_decode — Convert all HTML entities to their applicable characters
+•	htmlentities — Convert all applicable characters to HTML entities
+•	htmlspecialchars_decode — Convert special HTML entities back to characters
+•	htmlspecialchars — Convert special characters to HTML entities
+•	implode — Join array elements with a string
+•	join — Alias of implode
+•	lcfirst — Make a string's first character lowercase
+•	levenshtein — Calculate Levenshtein distance between two strings
+•	localeconv — Get numeric formatting information
+•	ltrim — Strip whitespace (or other characters) from the beginning of a string
+•	md5_file — Calculates the md5 hash of a given file
+•	md5 — Calculate the md5 hash of a string
+•	metaphone — Calculate the metaphone key of a string
+•	money_format — Formats a number as a currency string
+•	nl_langinfo — Query language and locale information
+•	nl2br — Inserts HTML line breaks before all newlines in a string
+•	number_format — Format a number with grouped thousands
+•	ord — Return ASCII value of character
+•	parse_str — Parses the string into variables
+•	print — Output a string
+•	printf — Output a formatted string
+•	quoted_printable_decode — Convert a quoted-printable string to an 8 bit string
+•	quoted_printable_encode — Convert a 8 bit string to a quoted-printable string
+•	quotemeta — Quote meta characters
+•	rtrim — Strip whitespace (or other characters) from the end of a string
+•	setlocale — Set locale information
+•	sha1_file — Calculate the sha1 hash of a file
+•	sha1 — Calculate the sha1 hash of a string
+•	similar_text — Calculate the similarity between two strings
+•	soundex — Calculate the soundex key of a string
+•	sprintf — Return a formatted string
+•	sscanf — Parses input from a string according to a format
+•	str_getcsv — Parse a CSV string into an array
+•	str_ireplace — Case-insensitive version of str_replace.
+•	str_pad — Pad a string to a certain length with another string
+•	str_repeat — Repeat a string
+•	str_replace — Replace all occurrences of the search string with the replacement string
+•	str_rot13 — Perform the rot13 transform on a string
+•	str_shuffle — Randomly shuffles a string
+•	str_split — Convert a string to an array
+•	str_word_count — Return information about words used in a string
+•	strcasecmp — Binary safe case-insensitive string comparison
+•	strchr — Alias of strstr
+•	strcmp — Binary safe string comparison
+•	strcoll — Locale based string comparison
+•	strcspn — Find length of initial segment not matching mask
+•	strip_tags — Strip HTML and PHP tags from a string
+•	stripcslashes — Un-quote string quoted with addcslashes
+•	stripos — Find the position of the first occurrence of a case-insensitive substring in a string
+•	stripslashes — Un-quotes a quoted string
+•	stristr — Case-insensitive strstr
+•	strlen — Get string length
+•	strnatcasecmp — Case insensitive string comparisons using a "natural order" algorithm
+•	strnatcmp — String comparisons using a "natural order" algorithm
+•	strncasecmp — Binary safe case-insensitive string comparison of the first n characters
+•	strncmp — Binary safe string comparison of the first n characters
+•	strpbrk — Search a string for any of a set of characters
+•	strpos — Find the position of the first occurrence of a substring in a string
+•	strrchr — Find the last occurrence of a character in a string
+•	strrev — Reverse a string
+•	strripos — Find the position of the last occurrence of a case-insensitive substring in a string
+•	strrpos — Find the position of the last occurrence of a substring in a string
+•	strspn — Finds the length of the initial segment of a string consisting entirely of characters contained within a given mask.
+•	strstr — Find the first occurrence of a string
+•	strtok — Tokenize string
+•	strtolower — Make a string lowercase
+•	strtoupper — Make a string uppercase
+•	strtr — Translate characters or replace substrings
+•	substr_compare — Binary safe comparison of two strings from an offset, up to length characters
+•	substr_count — Count the number of substring occurrences
+•	substr_replace — Replace text within a portion of a string
+•	substr — Return part of a string
+•	trim — Strip whitespace (or other characters) from the beginning and end of a string
+•	ucfirst — Make a string's first character uppercase
+•	ucwords — Uppercase the first character of each word in a string
+•	vfprintf — Write a formatted string to a stream
+•	vprintf — Output a formatted string
+•	vsprintf — Return a formatted string
+•	wordwrap — Wraps a string to a given number of characters
+
