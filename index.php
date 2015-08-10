@@ -28,6 +28,7 @@ function toggle(source) {
 	<input type="submit" name="filter">
 </form>
 <?php
+session_start();
 $page_name = "Students";
 require_once('header.php');
 	if(!empty($_POST['send'])){
@@ -100,4 +101,3 @@ echo "</table></dic>";
 	<input type="submit" class='btn btn-info' value="Send to Selected" name="send">
 	
 </form>
-
