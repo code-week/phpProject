@@ -11,7 +11,7 @@
 		<a class='btn btn-success' href='index.php' role='button'>See Students</a>
 		<br/>
 		<br/>
-		<a class='btn btn-danger' href='index.php' role='button'>View Sent E-mails</a>
+		<a class='btn btn-danger' href='sent_mails.php' role='button'>View Sent E-mails</a>
 		
 	</center>
 </body>

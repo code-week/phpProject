@@ -5,14 +5,12 @@ $page_name = 'Send Emails';
     if(!empty($_POST['send'])){
         $id_mail= "";
         foreach ($_POST['selected'] as $key => $value) {
-            echo "$key - $value <br>";
             $id_mail .= "$value, ";
             }
             $id_mail= substr($id_mail, 0, -2);
         }
     if(!empty($_POST['Send2'])){
             $mail= mysqli_query($conn, "SELECT student_id, mail FROM students WHERE student_id IN($_POST[id_mail])");
-            echo "SELECT student_id, mail FROM students WHERE student_id IN($_POST[id_mail]) ";
             while ($row_mail = mysqli_fetch_assoc($mail)) {
                 echo "$row_mail[mail] ";
             $to = $row_mail['mail'];
@@ -23,11 +21,6 @@ $page_name = 'Send Emails';
             'X-Mailer: PHP/' . phpversion();
             mail($to, $subject, $message, $headers);
             $sent_mails= mysqli_query($conn, "INSERT INTO sent_mails (id_st, mail_head, content) VALUES ('$_POST[id_mail]', '$subject', '$message') ");
-            if (mysqli_query($conn, $sent_mails)){
-            	echo "Success";
-            } else {
-            	echo "Error ". $sent_mails . "<br/>" . mysqli_error($conn);
-            }
             }
         }
         mysqli_close($conn);
