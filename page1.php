@@ -1,6 +1,8 @@
 <?php
+	// Start the session
+	session_start();
 	//create connection
-	$conn = mysqli_connect('localhost', 'root', '', 'vratsad_code-week');
+	$conn = mysqli_connect('localhost', 'vratsad', 'ProgramistB@c3', 'vratsad_code-week');
 	if (!$conn) {
 	die ("Connection failed: mysqli_connect_error()");
 } else {
@@ -75,7 +77,7 @@ if (isset($_POST['submit'])) {
 		VALUES ('$a', '$b', '$x', '$y', '$e', '$c', '$d', 'phone', '$impl', '$contribut')";
 		$res = mysqli_query($conn, $newstudent);
 		if (mysqli_affected_rows($conn) > 0) {
-			header("Location: page1.php/?reg=true&course=$d");
+			header("Location: page1.php?reg=true&course=$d");
 		}
 	}
 }else{
@@ -113,6 +115,7 @@ if(isset($_GET['reg'])){
 		echo "<span style='color: orange; text-align: center;'> Благодарим, че се регистрирахте за CodeWeek-Враца 2015г. </span>";
 		echo "<br/>";
 		echo "<span style='color: orange; text-align: center;'>Ще получите email за потвърждение сега и седмица преди събитието email с подробности за вашия модул - $course </span>";
+		echo "<span style='color: orange; text-align: center;'><a href='http://vratsad.hulk.icnhost.net/projects2-php/code-week/page1.php'> Back </a></span>";
 		echo "</div>";
 		echo "</div>";
 	}
@@ -121,11 +124,15 @@ if(isset($_GET['reg'])){
 <form method="post" action="page1.php" class="form-horizontal">
 <div class="row">
 	<div class="col-xs-2 col-offset-1"> </div>
-  	<div class="col-xs-6"> <h1> CodeWeek <img src= "http://localhost/demo-php/proba/mouse.jpg" width="180" height="150" alt="picture" class="img-circle"> </h1> </div>
+  	<div class="col-xs-6"> <h1> CodeWeek <img src= "http://vratsad.hulk.icnhost.net/projects2-php/code-week/mouse.png" width="180" height="150" alt="picture" class="img-circle"> </h1> </div>
 </div>
 <div class="row">
 	<div class="col-xs-2 col-offset-1"> </div> 
 	<div class="col-xs-6"> <h3> Форма за регистрация за участие в безплатен курс в рамките на Code Week 2015 година </h3> </div>
+</div>
+<div class="row">
+	<div class="col-xs-3 col-offset-1"> </div> 
+	<div class="col-xs-6"> <p class='error-msg'> * Задължително поле </p> </div>
 </div>
 <div class="row">
     <div class="col-xs-2 col-offset-1"> </div>
