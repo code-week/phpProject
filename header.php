@@ -3,9 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <?php 
-//create connection
 $conn = mysqli_connect('localhost', 'root', '', 'vratsad_code-week');
-//check connection
 if (!$conn) {
 	die ("Connection failed: mysqli_connect_error()");
 } 
@@ -14,7 +12,6 @@ if (!$conn) {
 	$status_result = mysqli_query($conn, $status_query);
 	if (!empty($_GET['id'])) {
 		$id = $_GET['id'];
-		$no = $_GET['no'];
 	}	
 ?>
 <!DOCTYPE html>
